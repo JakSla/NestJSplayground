@@ -3,9 +3,10 @@ import { UserController } from './controllers/user.controller';
 import { UserService } from './services/user.service';
 import { logger } from './middlewares/logger.middleware';
 import { UserMiddleware } from './middlewares/user.middleware';
+import { ConfigModule } from '../config/config.module';
 
 @Module({
-  imports: [],
+  imports: [ConfigModule],
   controllers: [UserController],
   providers: [UserService],
   exports: [UserService],
