@@ -8,6 +8,9 @@ async function bootstrap() {
     AppModule,
     new ExpressAdapter(expressApp),
   );
+
+  app.setGlobalPrefix('api');
+
   await app.listen(3000);
 }
 bootstrap();
