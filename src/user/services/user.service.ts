@@ -1,10 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { UserModel } from '../models2';
+import { UserModel, UserRole } from '../models2';
 import { UserRegisterRequestDto } from '../dto';
 
 @Injectable()
 export class UserService {
-  users: UserModel[] = [];
+
+  // dodajemy testowego usera
+  users: UserModel[] = [{
+    id: 1,
+    name: 'Piotr',
+    email: 'piotr@myflow.pl',
+    password: '123',
+    roles: [UserRole.ADMIN],
+  }];
+
+  async findByCredentials(email: string, password: string): Promise<UserModel> {
+    return this.users.find(user => user.email === email && user.password === password);
+  }
 
   async create(data: UserRegisterRequestDto): Promise<UserModel> {
     const user: UserModel = {

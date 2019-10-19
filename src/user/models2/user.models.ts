@@ -23,3 +23,8 @@ export class UserModel {
   })
   roles?: UserRole[];
 }
+
+export class TokenPayloadModel {
+  @ApiModelProperty()
+  user: UserModel;
+}

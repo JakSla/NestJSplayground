@@ -17,3 +17,16 @@ export class UserRegisterResponseDto {
   @ApiModelProperty({type: UserModel})
   user: UserModel;
 }
+export class UserLoginRequestDto {
+  @ApiModelProperty({example: 'piotr@myflow.pl'})
+  email: string;
+  @ApiModelProperty({example: '123'})
+  password: string;
+}
+
+export class UserLoginResponseDto {
+  @ApiModelProperty()
+  token: string;
+  @ApiModelProperty()
+  user: UserModel;
+}

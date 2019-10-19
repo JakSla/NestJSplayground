@@ -4,11 +4,12 @@ import { UserService } from './services/user.service';
 import { logger } from './middlewares/logger.middleware';
 import { UserMiddleware } from './middlewares/user.middleware';
 import { ConfigModule } from '../config/config.module';
+import { AuthService } from './services/auth.service';
 
 @Module({
   imports: [ConfigModule],
   controllers: [UserController],
-  providers: [UserService],
+  providers: [UserService, AuthService],
   exports: [UserService],
 })
 export class UserModule implements NestModule {
