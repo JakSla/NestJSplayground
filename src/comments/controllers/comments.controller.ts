@@ -1,10 +1,15 @@
-import { Controller, Get, Query, Param, NotFoundException, Post, Body } from '@nestjs/common';
+import { Controller, Get, Query, Param, NotFoundException, Post, Body, Delete } from '@nestjs/common';
 import { CommentModel } from '../models2';
 import { GetCommentsRequestDto, GetCommentsResponseDto } from '../dto';
 import { ApiResponse } from '@nestjs/swagger';
+import { UserService } from '../../user/services/user.service';
 
 @Controller('comments')
 export class CommentsController {
+
+  constructor(
+    private userService: UserService,
+  ) { }
 
   private comments: CommentModel[] = [
     { id: 1, name: 'Hydrogen' },
@@ -30,7 +35,7 @@ export class CommentsController {
   ];
 
   @Get()
-  @ApiResponse({description: 'struktura danych response', status: 200, type: GetCommentsResponseDto})
+  @ApiResponse({ description: 'struktura danych response', status: 200, type: GetCommentsResponseDto })
   getComments(@Query() query): GetCommentsResponseDto {
 
     let comments = this.comments;
@@ -54,7 +59,7 @@ export class CommentsController {
   getComment(@Param('id') id: string) {
 
     const comment = this.comments.find(c => c.id === parseInt(id, 10));
-    
+
     if (!comment) {
       throw new NotFoundException('Comment not found');
     }
@@ -78,4 +83,14 @@ export class CommentsController {
       data,
     };
   }
+
+  @Delete(':id')
+  deleteComments(@Param('id') id: string) {
+    this.comments = this.comments.filter(c => c.id !== parseInt(id, 10));
+    return {
+      total: this.comments.length,
+      id,
+    };
+  }
+
 }
