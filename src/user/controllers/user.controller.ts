@@ -1,12 +1,13 @@
-import { Controller, Post, Body, Get, Request, UseGuards, HttpException, HttpStatus, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Post, Body, Get, Request, UseGuards, HttpException, HttpStatus, UsePipes, ValidationPipe, Param, ParseIntPipe } from '@nestjs/common';
 import { UserService } from '../services/user.service';
-import { ApiCreatedResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiBearerAuth, ApiImplicitParam } from '@nestjs/swagger';
 import { UserRegisterResponseDto, UserRegisterRequestDto, UserLoginRequestDto, UserLoginResponseDto } from '../dto';
 import { User } from '../decorators/user.decorator';
 import { Roles } from '../decorators/roles.decorator';
 import { UserRole, UserModel } from '../models2';
 import { AuthGuard } from '../guards/auth.guard';
 import { AuthService } from '../services/auth.service';
+import { UserByIdPipe } from '../pipes/user-by-id.pipe';
 
 @Controller('user')
 export class UserController {
@@ -49,5 +50,14 @@ export class UserController {
     return {
       user,
     };
+  }
+
+  @Get(':id')
+  @ApiImplicitParam({name: 'id'})
+  async getUserById(@Param('id', UserByIdPipe) userFromPipe: UserModel) {
+    return {
+      userFromPipe,
+    };
+    // return await this.userService.getById(id);
   }
 }

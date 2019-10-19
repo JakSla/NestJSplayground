@@ -24,7 +24,7 @@ export class UserLoginRequestDto {
   @ApiModelProperty({ example: 'piotr@myflow.pl' })
   email: string;
 
-  @IsString()
+  @IsString({})
   @MinLength(3)
   @ApiModelProperty({ example: '123' })
   password: string;

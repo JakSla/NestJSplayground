@@ -29,4 +29,8 @@ export class UserService {
     this.users.push(user);
     return user;
   }
+
+  async getById(id: number): Promise<UserModel> {
+    return this.users.find(user => user.id === id);
+  }
 }
