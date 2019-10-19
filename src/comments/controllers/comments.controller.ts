@@ -1,6 +1,7 @@
 import { Controller, Get, Query, Param, NotFoundException, Post, Body } from '@nestjs/common';
-import { CommentModel } from '../models';
+import { CommentModel } from '../models2';
 import { GetCommentsRequestDto, GetCommentsResponseDto } from '../dto';
+import { ApiResponse } from '@nestjs/swagger';
 
 @Controller('comments')
 export class CommentsController {
@@ -29,6 +30,7 @@ export class CommentsController {
   ];
 
   @Get()
+  @ApiResponse({description: 'struktura danych response', status: 200, type: GetCommentsResponseDto})
   getComments(@Query() query): GetCommentsResponseDto {
 
     let comments = this.comments;

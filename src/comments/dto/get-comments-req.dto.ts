@@ -1,4 +1,4 @@
-import { CommentModel } from '../models';
+import { CommentModel } from '../models2';
 
 export class GetCommentsRequestDto {
   search: string;
