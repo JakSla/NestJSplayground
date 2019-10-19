@@ -1,26 +1,32 @@
 import { UserModel } from '../models2';
 import { ApiModelProperty } from '@nestjs/swagger';
+import { IsEmail, IsString, MinLength } from 'class-validator';
 
 export class UserRegisterRequestDto {
-  @ApiModelProperty({example: 'Piotr'})
+  @ApiModelProperty({ example: 'Piotr' })
   name: string;
 
-  @ApiModelProperty({example: 'piotr@myflow.pl'})
+  @ApiModelProperty({ example: 'piotr@myflow.pl' })
   email: string;
 
-  @ApiModelProperty({example: '123'})
+  @ApiModelProperty({ example: '123' })
   password: string;
 }
 
 export class UserRegisterResponseDto {
   // @ApiModelProperty()
-  @ApiModelProperty({type: UserModel})
+  @ApiModelProperty({ type: UserModel })
   user: UserModel;
 }
 export class UserLoginRequestDto {
-  @ApiModelProperty({example: 'piotr@myflow.pl'})
+
+  @IsEmail()
+  @ApiModelProperty({ example: 'piotr@myflow.pl' })
   email: string;
-  @ApiModelProperty({example: '123'})
+
+  @IsString()
+  @MinLength(3)
+  @ApiModelProperty({ example: '123' })
   password: string;
 }
 

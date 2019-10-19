@@ -1,6 +1,6 @@
-import { Controller, Post, Body, Get, Request, UseGuards, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, Get, Request, UseGuards, HttpException, HttpStatus, UsePipes, ValidationPipe } from '@nestjs/common';
 import { UserService } from '../services/user.service';
-import { ApiCreatedResponse } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { UserRegisterResponseDto, UserRegisterRequestDto, UserLoginRequestDto, UserLoginResponseDto } from '../dto';
 import { User } from '../decorators/user.decorator';
 import { Roles } from '../decorators/roles.decorator';
@@ -15,6 +15,7 @@ export class UserController {
     private authService: AuthService,
   ) { }
 
+  @UsePipes(new ValidationPipe({ transform: true }))
   @Post('login')
   async login(@Body() credentials: UserLoginRequestDto): Promise<UserLoginResponseDto> {
 
@@ -42,7 +43,8 @@ export class UserController {
 
   @Get()
   @UseGuards(AuthGuard)
-  @Roles(UserRole.ROOT)
+  // @Roles(UserRole.ADMIN)
+  @ApiBearerAuth()
   getUser(@User() user: UserModel) {
     return {
       user,
